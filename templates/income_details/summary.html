@@ -1,0 +1,89 @@
+{% extends 'main/base.html' %} {% block content %} 
+{% include 'main/header.html' %}
+
+<h5 class="mt-3 p-4 bg-warning">Hello,{{request.user.username}}</h5>
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-5">
+      <h4>% of Income Spent</h4>
+      <div class="chart"></div>
+      <canvas id="summaryChart" width="50" height="50"></canvas>
+    </div>
+    <div class="col-md-5 mr-5 mt-5 mt-sm-0 d-flex flex-column justify-content-center">
+      <h4>Summary</h4>
+      <div class="summary-details my-4"> 
+      <p>Total Monthly Income: <span class="badge bg-success text-white">Rs. {{monthly_income}}</span></p>
+      <p>Total Monthly Expenses: <span class="badge bg-danger text-white">Rs. {{monthly_expense}}</span></p>
+      <p>Total Monthly Savings : <span class="badge bg-primary text-white">Rs. {{monthly_saving}}</span></p>
+      <p>Cash Balance : <span class="badge bg-warning text-white">Rs. {{cash_amount}}</span></p>
+    </div>
+    </div>
+  </div>
+  <div class="row justify-content-center mt-4">
+    <div class="col-md-5"> 
+      <h5>Monthly Income for {{current_month|date:"F"}}</h5>
+      <table class="table table-striped">
+        <thead class="bg-success text-white">
+        <th>Category</th>
+        <th>Amount</th>
+      </thead>
+      {% for i in income_details %}
+      <tr>
+        <td>{{i.income_Category}}</td>
+        <td>Rs. {{i.income_Amount}}</td>
+      </tr>
+      {% endfor %}
+      <tr>
+        <td></td>
+        <td class=" text-white bg-success">Total : {{monthly_income}}</td>
+      </tr>
+      </table>
+    </div>
+    <div class="col-md-5">
+      <h5>Monthly Expenditure for {{current_month|date:"F"}}</h5>
+      <table class="table table-striped">
+        <thead class="bg-danger text-white">
+        <th>Category</th>
+        <th>Amount</th>
+      </thead>
+      {% for e in expense_details %}
+      <tr>
+        <td>{{e.expense_Category}}</td>
+        <td>Rs. {{e.expense_Amount}}</td>
+      </tr>
+      {% endfor %}
+      <tr>
+        <td></td>
+        <td class=" text-white bg-danger">Total : {{monthly_expense}}</td>
+      </tr>
+      </table>
+    </div>
+  </div>
+</div>
+{% include 'main/footer.html' %} 
+
+<script>
+  document.addEventListener('DOMContentLoaded',function(){
+    var ctx=document.getElementById('summaryChart').getContext('2d');
+    var monthly_income="{{monthly_income}}";
+    var monthly_expense="{{monthly_expense}}";
+    var monthly_saving="{{monthly_saving}}";
+    var cash_amount="{{cash_amount}}";
+    var summaryChart=new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: ['Monthly Income','Monthly Expense','Monthly Saving','Cash Amount'],
+        datasets:[{
+          data: [monthly_income,monthly_expense,monthly_saving,cash_amount],
+          backgroundColor:['green','red','blue','yellow'],
+
+        }],
+      },
+      options:{responsive: true}
+    })
+
+  })
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'main/base.html' %} {% block content %} {% include 'main/header.html' %}
+<div class="container mt-3">
+  <div class="row justify-content-center">
+    <div class="col-md-5">
+      <div class="jumbotron">
+      <h3 class="mb-5 text-primary text-center">Add New Income</h3>
+      <form method="post" action="{% url 'income' %}">
+        {% csrf_token %}
+      {{form.as_p}}
+      <button type="submit" class="btn-success px-2 my-3 text-white">Add Income</button>
+    </form>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <h4>Total Income : {{total_income}}</h4>
+      <div class="chart"></div>
+      <canvas id="summaryChart" width="50" height="50"></canvas>
+    </div>
+  </div>
+  <div class="row mt-2 justify-content-center">
+    <div class="col-md-12">
+      <h4 class="text-success">Income History</h4>
+      <table class="table table-striped">
+        <thead>
+          <th>Category</th>
+          <th>Description</th>
+          <th>Amount</th>
+          <th>Date</th>
+        </thead>
+        {% for d in income_details %}
+        <tr>
+          <td>{{d.income_Category}}</td>
+          <td>{{d.income_Description}}</td>
+          <td> Rs. {{d.income_Amount}}</td>
+          <td>{{d.income_Date}}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+          <td></td>
+          <td></td>
+          <td class="bg-success text-white">Total Income : {{total_income}}</td>
+          <td></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+{% include 'main/footer.html' %} 
+<script>
+  document.addEventListener('DOMContentLoaded', function(){
+    var ctx = document.getElementById('summaryChart').getContext('2d');
+    var summaryChart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: {{ data.category|safe }},
+        datasets: [{
+          data: {{ data.amount|safe }},
+          backgroundColor: ['red','blue','green','yellow','pink','black','orange','magenta','cyan'],
+          borderColor: 'red',
+          borderWidth: 1,
+        }],
+      },
+      options: { responsive: true }
+    });
+  });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}

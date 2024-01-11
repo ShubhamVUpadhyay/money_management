@@ -1,0 +1,11 @@
+body{
+  background-color: red;
+}
+.text{
+  color: rgb(166, 246, 238);
+  font-style: italic;
+  word-wrap: break-word;
+}
+#banner{
+  background: linear-gradient(220deg ,red 0%,black 50%);
+}

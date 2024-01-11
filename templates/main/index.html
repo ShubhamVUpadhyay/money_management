@@ -1,0 +1,28 @@
+{% extends 'main/base.html' %}
+{% block content %}
+{% include 'main/header.html'%}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <div class="jumbotron my-5" id="banner">
+        <div class="row">
+          <div class="col-md-8">
+            <div class="text">
+              <h1>An Easy Way for Managing Your Savings And Expense</h1>
+              <a href="{% url 'signup' %}"><button type="button" class="btn btn-outline-primary mt-3">Register Today &#8594; </button></a>
+            </div>
+          </div>
+          <div class="col-md-4">
+    
+          </div>
+
+
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+{% include 'main/footer.html' %}
+{% endblock %}

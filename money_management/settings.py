@@ -77,12 +77,12 @@ WSGI_APPLICATION = 'money_management.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 # Password validation
@@ -122,7 +122,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 
-STATICFILES_DIRS=[os.path.join(BASE_DIR ,staticfiles_build','static')]
+STATICFILES_DIRS=[os.path.join(BASE_DIR ,'staticfiles_build','static')]
 STATIC_URL = '/static/'
 
 
